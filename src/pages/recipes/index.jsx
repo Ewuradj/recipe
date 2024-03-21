@@ -21,18 +21,18 @@ export default function Recipes() {
   const getRecipes = () => {
     setLoading(true);
     // prepare URL
-    const url = new URL("https://api.spoonacular.com/recipes/complexSearch");
-    url.searchParams.append(
-      "apiKey",
-      process.env.REACT_APP_SPOONACULAR_API_KEY
-    );
+    // const url = new URL("https://api.spoonacular.com/recipes/complexSearch");
+    const url = new URL("http://localhost:4000/recipes");
+    url.searchParams.append("apiKey", process.env.REACT_APP_SPOONACULAR_API_KEY );
     url.searchParams.append("query", searchitem);
+    
     // fetch recipes from the API
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         // update  recipes state
-        setRecipes(data.results);
+        // setRecipes(data.results);
+        setRecipes(data);
         // console.log(data);
       })
       .catch((error) => {
@@ -58,7 +58,7 @@ export default function Recipes() {
         {loading ?<img src={loadingIcon} width='50%' alt="loadingicon"/> : recipes.length > 0 ? (
           recipes.map((recipe) => (
             
-            <Grid key={recipe.id} item xs={4}>
+            <Grid key={recipe._id} item xs={4}>
               <Card sx={{ maxWidth: 345, height: "100%" }}>
                 <CardActionArea sx={{ height: "100%" }}>
                   <CardMedia
