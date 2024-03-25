@@ -8,7 +8,7 @@ export default function Navbar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Recipe App
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button href="/add-recipe" color="inherit">Form</Button>
       </Toolbar>
     </AppBar>
   );
