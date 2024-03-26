@@ -1,133 +1,102 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { Alert, Box, Collapse, Container, IconButton, MenuItem, TextField } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import { useState } from "react";
+import Navbar from "../../components/navbar";
 
+export const countries = [
+    { value: 'GH', label: 'Ghana' },
+    { value: 'NG', label: 'Nigeria' },
+    { value: 'BE', label: 'Benin' },
+    { value: 'TG', label: 'Togo' }
+];
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+export default function AddRecipe() {
+    const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState(true);
+    const [message, setMessage] = useState('New Recipe Added Successfully!');
 
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+    const addRecipe = async (event) => {
+        // Set loading to true
+        // Prevent default form submit behavior
+        // Get form data
+        // Post form data to the backend
+        // Update message based on response status
+        // Open collapsible Alert
+        // Set loading to false
+    }
 
-import Stack from '@mui/material/Stack';
-import { Margin } from '@mui/icons-material';
+    return (
+        <>
+            <Navbar />
+            <Container sx={{ my: '2rem' }} maxWidth="sm">
+                <h1>Add A New Recipe</h1>
+                <form>
+                    <TextField
+                        sx={{ mb: '2rem' }}
+                        fullWidth
+                        name="title"
+                        label="Recipe Title" />
+                    <TextField
+                        sx={{ mb: '2rem' }}
+                        fullWidth
+                        name="description"
+                        label="Recipe Description"
+                        multiline
+                        rows={4} />
+                    <TextField
+                        sx={{ mb: '2rem' }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        type="file"
+                        fullWidth
+                        name="image"
+                        label="Recipe Image" />
+                    <TextField
+                        sx={{ mb: '2rem' }}
+                        select
+                        fullWidth
+                        name="country"
+                        label="Recipe Country"
+                        defaultValue="GH"
+                    >
+                        {countries.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <Box textAlign="center">
+                        <Collapse in={open}>
+                            <Alert
+                                action={
+                                    <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                            setOpen(false);
+                                        }}
+                                    >
+                                        <Close fontSize="inherit" />
+                                    </IconButton>
+                                }
+                                sx={{ mb: 2 }}
+                            >{message}</Alert>
+                        </Collapse>
 
-
-
-
-export default function BasicTextFields() {
-    const [country, setCountry] = React.useState('');
-    const handleChange = (event) => {
-            setCountry(event.target.value);
-           };
-           const VisuallyHiddenInput = styled('input')({
-            clip: 'rect(0 0 0 0)',
-            clipPath: 'inset(50%)',
-            height: 1,
-            overflow: 'hidden',
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            whiteSpace: 'nowrap',
-            width: 1,
-          });
-
-  return (
-   <div>
-    <p >Form Goes Here</p>
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '120ch', padding:''},
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField id="outlined-basic" label="Title" variant="outlined" /> <br/>
-        <TextField height="" id="outlined-basic" label="Description" variant="outlined" /> <br/>
-      
-      
-      <div>
-
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Country</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={country}
-          label="Country"
-          onChange={handleChange}
-        >
-          <MenuItem value={''}>Ghana</MenuItem>
-          <MenuItem value={''}>Nigeria</MenuItem>
-          <MenuItem value={''}>Senegal</MenuItem>
-        </Select>
-      </FormControl> <br/>
-      </div>
-
-      <div>
-
-    <Stack spacing={2} direction="row">
-      <Button 
-      component="label"
-      role={undefined}
-      variant="contained"
-      tabIndex={-1}
-      startIcon={<CloudUploadIcon />}
-    >
-      Upload image
-      <VisuallyHiddenInput type="file" />
-
-    </Button>
-     
-      <Button  variant="contained">Submit</Button>
-     
-    </Stack>
-      </div>
-
- 
-
-      
-    </Box>
-
-    
-   </div>
-  );
+                        <LoadingButton
+                            sx={{ width: '50%' }}
+                            loading={loading}
+                            type="submit"
+                            size="large"
+                            variant="contained">
+                            Add New Recipe
+                        </LoadingButton>
+                    </Box>
+                </form>
+            </Container>
+        </>
+    );
 }
-
-
-
-
-  
-   
-
-
-
-
-
-
-// export default function InputFileUpload() {
-//   return (
-    
-//   );
-// }
-
-
-
-// export default function BasicSelect() {
-//   const [age, setAge] = React.useState('');
-
-//   const handleChange = (event) => {
-//     setAge(event.target.value);
-//   };
-
-//   return (
-//     <Box sx={{ minWidth: 120 }}>
-      
-//     </Box>
-//   );
-// }
-    
