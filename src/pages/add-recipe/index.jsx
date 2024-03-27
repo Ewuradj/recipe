@@ -12,18 +12,32 @@ export const countries = [
 ];
 
 export default function AddRecipe() {
-    const [loading, setLoading] = useState(true);
-    const [open, setOpen] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('New Recipe Added Successfully!');
 
     const addRecipe = async (event) => {
         // Set loading to true
+        setLoading(true);
         // Prevent default form submit behavior
+        event.preventDefault();
         // Get form data
+        const formData= new FormData(event.target);
         // Post form data to the backend
+        const response = await fetch(`${process.env.REACT_APP_RECIPE_API_URL}/recipes`,{
+            method:'POST',
+            body: formData,
+        });
+        
+
         // Update message based on response status
+        if (response.status !== 201) {
+            setMessage("Failed to add recipe");
+        }
         // Open collapsible Alert
+        setOpen(true);
         // Set loading to false
+        setLoading(false);
     }
 
     return (
@@ -31,7 +45,7 @@ export default function AddRecipe() {
             <Navbar />
             <Container sx={{ my: '2rem' }} maxWidth="sm">
                 <h1>Add A New Recipe</h1>
-                <form>
+                <form onSubmit={addRecipe} >
                     <TextField
                         sx={{ mb: '2rem' }}
                         fullWidth
